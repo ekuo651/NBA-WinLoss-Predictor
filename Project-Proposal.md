@@ -1,17 +1,20 @@
 # **Project Proposal**
-
-### Goals of this Project
+Using machine learning to predict NBA matchps. 
 
 ## **Roadmap**
 1. [Data Scraping](#Data-Scraping)
-2. [Organizing Data](#Data-Organization)
+1. [Organizing Data](#Data-Organization)
 1. [Algorithms](#Processing-Data)
+1. [Visualization & Presentation](#Visualization-&-Presentations)
+1. [Hosting](#AWS)
 
 
 ## **Data Scraping**
 
 >**Theoretically ...**
-1. Use beautifulsoup to extract past basketball statistics from a variety of sources
+1. Use beautifulsoup to extract past basketball statistics \
+ [Webscraping NBA Stats](!https://towardsdatascience.com/web-scraping-nba-stats-4b4f8c525994)\
+ [Webscraper library](!https://pypi.org/project/basketball-reference-web-scraper/)
 
 1. Use beautifulsoup to intermitently upload new stats as new league games are played
 
@@ -21,7 +24,7 @@
 
 1. Manually upload past basketball statistics
 
-2. Focus on using beautiful soup to get new data (like stock tickers)
+2. Drop the updating aspect (this would be disappointing)
 
 3. Don't use the news
 
@@ -55,13 +58,26 @@
 
 **Primary Goal**
 
-Build a generalizable TensorFlow model that uses classification, regression or reinforcement learning to predict the outcome of NBA games.
-
-Use Keras Tuner to 
+Build a generalizable TensorFlow model that uses classification, regression or reinforcement learning to predict the outcome of NBA games and use Keras Tuner to optimize the hyperparameters for the neural net.
 
 **Secondary Goal** 
 
 Incorporate live news sentiment analysis as a data stream to feed into neural net.
+
+---
+## **Visualization & Presentation**
+
+It would be ideal to have an auto updating dashboard for this project. I would like to explore using Tableau or coding this in PyViz if possible.
+
+---
+## **AWS**
+
+Host the project on AWS.
+
+
+
+
+
 
 ## **If this all doesn't work ...**
  SimFin 
