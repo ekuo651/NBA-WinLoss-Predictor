@@ -8,7 +8,7 @@ def define_types(df):
 def box_score_cleaner(df):
     df['Team'] = df['team'].str[5:]
     df['Location'] = df['location'].str[9:]
-    df['Opponent'] = df['opponent'].str[9:]
+    df['Opponent'] = df['opponent'].str[5:]
     df['Outcome'] = df['outcome'].str[8:]
     return df
 
