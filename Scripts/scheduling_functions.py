@@ -37,11 +37,24 @@ def schedule_organizer(df):
     return new_df
 
 def schedule_encoder(df):
-    df['game_number'] = df.index
-    df.game_number = df.game_number.astype('str')
-    df['game_id'] = df.game_number
+    df['game_id'] = df.index+1
+    df.game_id = df.game_id.astype('str')
     return df
     
 def get_encoded_schedule(df):
     new_df = schedule_encoder(schedule_organizer(schedule_cleaner(define_types(calculate_endtime(df)))))
+    return new_df
+
+def verify_integers(df):
+    df.fillna(0, inplace=True)
+    df.away_team_score = df.away_team_score.astype('int')
+    df.home_team_score = df.home_team_score.astype('int')
+    return df
+
+def calculate_spread(df):
+    df['spread'] = abs(df.away_team_score-df.home_team_score)
+    return df
+
+def get_spread(df):
+    new_df = calculate_spread(verify_integers(df))
     return new_df
