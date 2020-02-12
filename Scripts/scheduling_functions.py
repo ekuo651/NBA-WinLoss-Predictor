@@ -41,7 +41,7 @@ def schedule_encoder(df):
     df.game_id = df.game_id.astype('str')
     return df
     
-def get_encoded_schedule(df):
+def organize_and_encode_schedule(df):
     new_df = schedule_encoder(schedule_organizer(schedule_cleaner(define_types(calculate_endtime(df)))))
     return new_df
 
@@ -57,4 +57,8 @@ def calculate_spread(df):
 
 def get_spread(df):
     new_df = calculate_spread(verify_integers(df))
+    return new_df
+
+def get_encoded_schedule(df):
+    new_df = get_spread(organize_and_encode_schedule(df))
     return new_df
