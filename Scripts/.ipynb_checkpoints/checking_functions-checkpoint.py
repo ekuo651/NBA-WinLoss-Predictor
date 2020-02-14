@@ -25,4 +25,8 @@ def verify_entries(df_1, df_2, original_df):
     else:
         print("Keep Scrubbing")
 
+def checking_for_null(df):
+    
+    df.dropna(axis=1, how = 'all')
+    len(checking_for_null)
     
