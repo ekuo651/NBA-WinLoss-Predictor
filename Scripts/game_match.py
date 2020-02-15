@@ -1,3 +1,6 @@
+import pandas as pd
+encoded_box_scores = pd.read_csv('../Resources/encoded_box_scores.csv')
+
 def get_game_ids(slug):
     '''Returns a list of game_ids for a player with a given slug.'''
     game_ids = encoded_box_scores[encoded_box_scores.slug == slug]['game_id'].to_list()
@@ -33,11 +36,11 @@ def calculate_matchup_box_scores_time_limit(slug, common_games, date):
     list_of_averages = list(average_scores[1:-2])
     return list_of_averages
     
-def get_player_matchup_scores(slug, list_of_opponents, date):
+def get_player_matchup_scores(slug, opponents_list, date):
     '''Returns the statistics of a player vs list of opponents prior to a certain game date.'''
     list_of_stats = calculate_matchup_box_scores_time_limit(slug, 
-                                                            common_games(get_game_ids, 
-                                                                         opponent_in_games(list_of_opponents)), 
+                                                            common_games(get_game_ids(slug), 
+                                                                         opponent_in_games(list_of_opponents_list)), 
                                                             date)
     return list_of_stats
     
