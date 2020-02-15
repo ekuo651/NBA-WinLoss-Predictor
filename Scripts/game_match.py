@@ -1,5 +1,7 @@
 import pandas as pd
+from datetime import *
 encoded_box_scores = pd.read_csv('../Resources/encoded_box_scores.csv')
+encoded_box_scores['date'] = pd.to_datetime(encoded_box_scores['date'])
 
 def get_game_ids(slug):
     '''Returns a list of game_ids for a player with a given slug.'''
@@ -30,9 +32,10 @@ def calculate_matchup_box_scores(slug, common_games):
 
 def calculate_matchup_box_scores_time_limit(slug, common_games, date):
     '''Returns the average scores between player and all opponents.'''
+    start_date = datetime.strptime(date, '%Y-%m-%d') - timedelta(weeks=104)   
     average_scores = encoded_box_scores[(encoded_box_scores.slug==slug) & 
                                         (encoded_box_scores.game_id.isin(common_games)) & 
-                                        (encoded_box_scores.date < date)].mean()
+                                        ((encoded_box_scores.date > start_date) & (encoded_box_scores.date < date))].mean()
     list_of_averages = list(average_scores[1:-2])
     return list_of_averages
     
@@ -40,7 +43,7 @@ def get_player_matchup_scores(slug, opponents_list, date):
     '''Returns the statistics of a player vs list of opponents prior to a certain game date.'''
     list_of_stats = calculate_matchup_box_scores_time_limit(slug, 
                                                             common_games(get_game_ids(slug), 
-                                                                         opponent_in_games(list_of_opponents_list)), 
+                                                                         opponent_in_games(opponents_list)), 
                                                             date)
     return list_of_stats
     
