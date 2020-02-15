@@ -1,4 +1,5 @@
 import pandas as pd
+from datetime import *
 encoded_box_scores = pd.read_csv('../Resources/encoded_box_scores.csv')
 encoded_box_scores['date'] = pd.to_datetime(encoded_box_scores['date'])
 
