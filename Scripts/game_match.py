@@ -1,5 +1,10 @@
 import pandas as pd
 from datetime import *
+import sys
+sys.path.insert(1, '../Scripts') #path
+
+from schedule_to_slugs import *
+
 encoded_box_scores = pd.read_csv('../Resources/encoded_box_scores.csv')
 encoded_box_scores['date'] = pd.to_datetime(encoded_box_scores['date'])
 
@@ -47,3 +52,6 @@ def get_player_matchup_scores(slug, opponents_list, date):
                                                             date)
     return list_of_stats
     
+def matchup_per_game_id(game_id):
+    stats = [get_player_matchup_scores(starter, away_lineup_slugs(game_id),get_date(game_id)) for starter in home_lineup_slugs(game_id)]
+    return stats    

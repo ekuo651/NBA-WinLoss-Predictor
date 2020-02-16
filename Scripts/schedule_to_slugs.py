@@ -1,4 +1,10 @@
+import pandas as pd
+
+schedule_lineup = pd.read_csv('../Resources/schedule_lineup.csv')
+name_all_formats = pd.read_csv('../Resources/name_all_formats.csv')
+
 ## PART 1 : Get Lineups
+
 
 def todays_games(date):
     '''Returns game_ids for a date representing all unique games.'''
@@ -50,3 +56,8 @@ def away_lineup_slugs(game_id):
     team = away_team(game_id)
     away_lineup_slugs = lineup_slug_converter(lineup, team)
     return away_lineup_slugs
+
+def get_date(game_id):
+    date = schedule_lineup[schedule_lineup.game_id==game_id].iat[0,1]
+    return date
+    
