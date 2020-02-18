@@ -46,12 +46,13 @@ The URL to access the historical starting lineups is consistent for every team, 
 
 By defining the link format with these two variables and running a for loop through every team and season year using `BeautifulSoup` functions, all of the data was extracted to one `DataFrame`. This took approximately two minutes to run. The Code can found in the `Data Extraction/ReferenceLinup.ipynb`. <br/>
 <p align="center"> 
-  ATL's starting line up in the 2012 season
+  ATL's starting lineup in the 2012 season
 <p align="center">
   <img src="/Presentation/Images/starting_web.png" width="800" height="200"><br/>
 </p>
 <p align="center">
-  The output into a `DataFrame`
+  ATL's starting lineup in a pandas DataFrame
+</p>
 <p align="center">
   <img src="Presentation/Images/starting_df.png" width="650" height="200"><br/>
 </p>
