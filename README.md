@@ -1,9 +1,12 @@
 # NBA Predictor 
+By: Emmy Kuo, Jennifer Malroy, Ray Yip 
+
+
 ![Python](https://camo.githubusercontent.com/de59e8e9b410aa0b9479b114040c06468ef33cfc/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f707974686f6e2d76332e362b2d626c75652e737667) 
 
 ## A statistical look into NBA Starting Line Matchups
 
-The sports betting market has been on the rise due to a recent wave of changes to legislation. On the whole, the industry is expected to grow by ____ in the next ___ years. In order to capitalize on the expected growth, we are using machine learning to predict outcomes in NBA regular season games. 
+The sports betting market has been on the rise due to a recent wave of changes to legislation. On the whole, the industry is expected to grow by $8 billion  in the next 5 years.* In order to capitalize on the expected growth, we are using machine learning to predict outcomes in NBA regular season games. 
 
 Since the strength of a team is heavily dependent upon them having star players, we decided to take a player centric approach in predicting matchups. Our training set is comprised of player advanced stats, usage stats and average box scores. The average box scores are calculated by equally weighing the scores from each individual game a home team starter and away team starter were in for a lookback period of 2 years.  
 
@@ -13,6 +16,8 @@ Since the strength of a team is heavily dependent upon them having star players,
 1. [Data Hosting](#data-on-the-cloud)
 1. [Machine Learning Models](#machine-learning-models)
 1. [Conclusions](#conclusions)
+1. [Future Improvements](#future-improvements)
+1. [Resources](#resources)
 
 ## **Data Extraction**
 
@@ -44,26 +49,23 @@ The URL to access the historical starting lineups is consistent for every team, 
             url = 'https://www.basketball-reference.com/teams/{}/{}_start.html'.format(i, j)
 ```
 
-By defining the link format with these two variables and running a for loop through every team and season year using `BeautifulSoup` functions, all of the data for each team and season was extracted to one `DataFrame`. This took approximately two minutes to run. The Code can found in the [Data Extraction/ReferenceLinup.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/ReferenceLineup.ipynb) notebook. <br/>
-<p align="center"> 
-  ATL's starting lineup in the 2013 season
-<p align="center">
-  <img src="/Presentation/Images/starting_web.png" width="800" height="200"><br/>
-</p>
-<p align="center">
-  ATL's starting lineup in a pandas DataFrame
-</p>
-<p align="center">
-  <img src="Presentation/Images/starting_df.png" width="650" height="200"><br/>
-</p>
-<br/>
+By defining the link format with these two variables and running a for loop through every team and season year using `BeautifulSoup` functions, all of the data for each team and season was extracted to one `DataFrame`. This took approximately two minutes to run. The Code can found in the [Data Extraction/ReferenceLinup.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/ReferenceLineup.ipynb) notebook.
+
+
+ATL's starting lineup in the 2013 season
+
+![starting web](Presentation/Images/starting_web.png)
+
+ATL's starting lineup in a pandas DataFrame
+
+![starting df](Presentation/Images/starting_df.png)
+
 Similar to the historical starting lineups, players' advanced stats were extracted using `BeautifulSoup`. The URL format to access every the advanced stats only changes by season year, therefore, the same approach in Python was used to pull in the data. 
 
 Code can be found in the [Data Extraction/adv_stats.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/adv_stats.ipynb)
 
-<p align="center">
-  <img src="Presentation/Images/adv_stat_df.png" width="700" height="200"><br/>
-</p>
+![Advance Stats](Presentation/Images/adv_stat_df.png)
+
 Historical game schedules were obtained using the `basketball-reference` client as well. 
 Code can be found in the [Data Extraction/season_schedules.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/season_schedules.ipynb) notebook.
 
@@ -71,17 +73,32 @@ A list of active players were also obtained using the `basketball-reference` cli
 
 **NBA Stats**
 
-Usage statistics were scraped from the NBA stats page. 
+Player usage can calcuate the amount of time a player is used during the season to see their contribution to the team. The only available place was the larger set of data provided by 'stats.nba.com'. The stats provided by NBA is great and expansive since it is both current and historical. However the website is done by using a Javascript format which BeautifulSoup could not scarpe correctly. In order to get around this we used [`Selenium`](https://selenium-python.readthedocs.io/installation.html#introduction) to handle the task. Code can be found at [Data Extraction/get_stats_nba_id.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/get_stats_nba_id.ipynb)
 
-[Data Extraction/get_stats_nba_id.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/get_stats_nba_id.ipynb)
->## ***RAY, THIS IS ALL YOU***
+
+Selenium will load each page into a specific webdriver and browswer, read the page and scrape the targeted data similar to BeautifulSoup. 
+
+Exploring how each player's stats URL was created, it was found that the formatting provided that each user had a unique ID.
+
+![stats_url](Presentation/Images/stats_url.png)
+
+From there, scarping the index page provided the ID of all users from the history provided by the NBA. 
+
+![Selenium](Presentation/Images/Selenium_shot.png)
+![Players-id](Presentation/Images/Player_Id.png)
+
+Merging this historical list of all players with the Active Players list defined earlier, it culled the list down to 1200 players. We then used this list as to start scarping each individual player's usage page for the 7 years of data we are looking for. For looping the URL with the new variable for the season required. Selenium would open each individual's user page and scrape one row of data per season asked. This equated to 7847 pages and data. Because stats.nba.com provided the current season data if URL was incorrect, we needed to remove the duplications in data which left about 7400 rows. 
+
+![all_usage](Presentation/Images/all_usage.png)
+
+After cleaning up, the columns and dataframes, we were able to merge this with the other sets of data tied to each user. 
 
 **ESPN Depth Charts**
 
 ESPN Depth Charts webpage provides real-time starting lineups per team. Using `BeautifulSoup`, real-time data is obtained and stored in a `DataFrame` for on-demand predictions. Code can be found in the [Data Extraction/starting_lineup](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/starting_lineup.ipynb)
-<p align="center">
-  <img src="Presentation/Images/depth_df.png" width="525" height="150"><br/>
-</p>
+
+
+![Depth DF](Presentation/Images/depth_df.png)
 
 ---
 ## **Data Transformation**
@@ -118,21 +135,15 @@ After cleaning advanced stats data set, we used a left join to attach a `slug` t
 ## **Data on the Cloud**
 To use our models for day to day predictions, we hosted our dataset on the cloud using Amazon Relational Database Service (AWS RDS) and established a connection through Python. Code can be found in the [Data Transformation/tableSQL.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Transformation/tableSQL.ipynb)
 
-<p align="center">
-  <img src="Presentation/Images/amazon_RDS.png" width="800" height="150"><br/>
-</p>
+![Amazon RDS](Presentation/Images/amazon_RDS.png)
 
 **Three tables were created: Advanced Stats by Player, Usage Stats, and Box Scores**
-<br/>
-<p align="left">
-  <img src="Presentation/Images/create_table.png" width="700" height="225"><br/>
-</p>
+
+![create_table](Presentation/Images/create_table.png)
 
 **The data was uploaded using .csv files created during the data extraction process** 
-<br/>
-<p align="left">
-  <img src="Presentation/Images/load_table.png" width="500" height="150"><br/>
-</p>
+
+![aws_table](Presentation/Images/load_table.png)
 
 ## **Machine Learning Models**
 
@@ -142,23 +153,27 @@ To use our models for day to day predictions, we hosted our dataset on the cloud
 
 The dataset had 57 columns of feature data and 5 starting players per game over a two season period. The `StandardScaler()` was used to pre-process the data and the target data was encoded with 1 and 0 for Win and Loss. The training and testing data was split at 70/30. Supervised machine-learning classification models from the `sklearn` library were used and evaluated in turn with `Kfold` to determine the optimal model by accuracy results. Support Vector Classification (SVC) produced the best results and was used to make predictions. 
 
-<p align="left">
-  <img src="Presentation/Images/algo_compare.png" width="385" height="225"><br/>
-</p>
+![algo compare](Presentation/Images/algo_compare.png)
+
 
 **SVC Model Evaluation** 
 
 The SVC model produced an accuracy Score of 62.0%, a true positive rate of 58%, and a true negative of 48%. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Presentation/Images/classification_report.png" width="300" height="175">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <img src="Presentation/Images/confusion.png" width="225" height="150">
+![](Presentation/Images/classification_report.png)![](Presentation/Images/confusion.png)
 
 Code can be found in the [Models/Classification.ipynb](https://github.com/ekuo651/Project-3/blob/master/Models/Classification.ipynb) notebook.
 
 
 ## **Conclusions**
+>#NEED CONCLUSION 
 
+## **Future Improvements**
+Some future improvements we would like to see for this product is for other users to have a front end environment to use the algortithm to predict future games. We explored using [Anvil](www.anvil.works) a python UI client to start expeirmenting with possibilities along with possible betting odds on the current market for games. 
 
+A true future goal would be to develop a smart contract betting dApp to associate it with our betting favorites. We found samples of other users buiding a shell of a dApp betting system** that would be a model of how we can likely move forward. 
 
+## **Resources**
 
 #### Web Pages:
 - https://stats.nba.com
@@ -174,5 +189,9 @@ Code can be found in the [Models/Classification.ipynb](https://github.com/ekuo65
 #### Machine Learning Libraries  
 
 - `sklearn`, `LogisticRegression`, `DecisionTreeClassifier`, `KNeighborsClassifier`, `LinearDiscriminantAnalysis`, `GaussianNB`, `SVC`
+
+---
+\* https://www.marketwatch.com/story/firms-say-sports-betting-market-to-reach-8-billion-by-2025-2019-11-04
+** https://medium.com/coinmonks/create-a-sports-betting-dapp-on-the-ethereum-blockchain-part-1-1f69f908b939 & https://medium.com/coinmonks/tutorial-create-a-sports-betting-dapp-on-the-ethereum-blockchain-part-2-cd4753afe702
 
 
