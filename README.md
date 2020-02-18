@@ -1,5 +1,5 @@
 # NBA Predictor 
-By: Emmy Kuo, Jennifer Malroy, Ray Yip 
+By: Emmy Kuo, Jennifer Mulroy, Ray Yip 
 
 
 ![Python](https://camo.githubusercontent.com/de59e8e9b410aa0b9479b114040c06468ef33cfc/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f707974686f6e2d76332e362b2d626c75652e737667) 
