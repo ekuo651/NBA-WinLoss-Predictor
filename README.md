@@ -34,27 +34,36 @@ We were able to aggregate the data from Basketball Reference, NBA Stats and ESPN
 
 Individual player box scores from 2013-present were available via the  ```basketball-reference``` client. This dataset includes an entry per player per game for over 7 years. In the regular season, each of 30 teams plays 82 games, which means that there are 1,230 games for each regular season. Additionally, there are roughly 70 playoff games each season, depending on how long each team lasts in a 7 game series. For each game, there are roughly 11 players per team who see minutes on the court. Therefore, the player box scores was estimated to be ***approximately 200,200 rows of data*** ([1,230 +70] games * 11 players per team * 2 teams * 7 years). This took approximately 40 minutes to scrape using the API client. Code can be found in the `Data Extraction/clean_data_scrape.ipynb` notebook.
 
-Historical starting lineups for every team is available on the basketball-reference.com website. The data is grouped by season on team webpages but not accessible through the API client. The `BeautifulSoup` web scraping tool was used to pull this data. `BeautifulSoup` is a Python library for getting data out of HTML and other markup languages which extracts text from HTML tags, removes the markup, and saves the information by converting the data into an object in Python. 
+Historical starting lineups for every team is available on the basketball-reference.com website, the data is grouped by season on team webpages, but is not accessible through the API client. The `BeautifulSoup` web scraping tool was used to pull this data. `BeautifulSoup` is a Python library for getting data out of HTML and other markup languages which extracts text from HTML tags, removes the markup, and saves the information by converting the data into an object in Python. 
 
-The URL to access the historical starting lineups is consistent for every team, only changing by the team abbreviation and season year in the link. This made it easy to work with in Python. By defining the link format with these two variables and running a for loop through every team and season year using `BeautifulSoup` functions all of the data was extracted to one `DataFrame`.  The Code can found in the `Data Extraction/ReferenceLinup.ipynb`. 
-
+The URL to access the historical starting lineups is consistent for every team, only changing by the team abbreviation and season year in the link. This made it easy to work with in Python.
 <br/>
+```
+ for i in team_name_list:
+        for j in year:  
+            url = 'https://www.basketball-reference.com/teams/{}/{}_start.html'.format(i, j)
+```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/Presentation/Images/starting_web.png" width="600" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <img src="Presentation/Images/starting_df.png" width="600" height="200">
+By defining the link format with these two variables and running a for loop through every team and season year using `BeautifulSoup` functions, all of the data was extracted to one `DataFrame`. This took approximately two minutes to run. The Code can found in the `Data Extraction/ReferenceLinup.ipynb`. <br/>
+<p align="center"> 
+  ATL's starting line up in the 2012 season
+<p align="center">
+  <img src="/Presentation/Images/starting_web.png" width="600" height="200"><br/>
+</p>
+<p align="center">
+  The output into a `DataFrame`
+<p align="center">
+  <img src="Presentation/Images/starting_df.png" width="600" height="200"><br/>
+</p>
 <br/>
+Similar to the historical starting lineups, player advanced stats by season was extracted using `BeautifulSoup`. THe URL format to access every player advanced stats only changes by season year and therefore, the same approach was used to pull in the data. The Code can be found in `Data Extraction/adv_stats.ipynb`<br/>
 
-
-Advanced stats were available though the API client (`Data Extraction/...`)
->## ***JEN, THIS IS ALSO ALL YOU***
-
+<p align="center">
+  <img src="Presentation/Images/adv_stat_df.png" width="800" height="200"><br/>
+</p>
 Historical game schedules were obtained using the `basketball-reference` client as well. Code can be found in the `Data Extraction/season_schedules.ipynb` notebook.
 
 A list of active players were also obtained using the `basketball-reference` client. Code can be found in `Data Extraction/active_players.ipynb`.
-
-
-
-
-
 
 
 **NBA Stats**
