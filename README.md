@@ -57,12 +57,15 @@ By defining the link format with these two variables and running a for loop thro
   <img src="Presentation/Images/starting_df.png" width="650" height="200"><br/>
 </p>
 <br/>
-Similar to the historical starting lineups, players' advanced stats were extracted using `BeautifulSoup`. The URL format to access every the advanced stats only changes by season year, therefore, the same approach in Python was used to pull in the data. Code can be found in the [Data Extraction/adv_stats.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/adv_stats.ipynb) notebook.<br/>
+Similar to the historical starting lineups, players' advanced stats were extracted using `BeautifulSoup`. The URL format to access every the advanced stats only changes by season year, therefore, the same approach in Python was used to pull in the data. 
+
+Code can be found in the [Data Extraction/adv_stats.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/adv_stats.ipynb)
 
 <p align="center">
   <img src="Presentation/Images/adv_stat_df.png" width="700" height="200"><br/>
 </p>
-Historical game schedules were obtained using the `basketball-reference` client as well. Code can be found in the [Data Extraction/season_schedules.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/season_schedules.ipynb) notebook.
+Historical game schedules were obtained using the `basketball-reference` client as well. 
+Code can be found in the [Data Extraction/season_schedules.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/season_schedules.ipynb) notebook.
 
 A list of active players were also obtained using the `basketball-reference` client. Code can be found in the [Data Extraction/active_players.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/active_players.ipynb) notebook.
 
@@ -149,7 +152,7 @@ The SVC model produced an accuracy Score of 62.0%, a true positive rate of 58%, 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Presentation/Images/classification_report.png" width="300" height="175">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <img src="Presentation/Images/confusion.png" width="225" height="150">
 
-Code can be found in the [Models/Classification.ipynb](https://github.com/ekuo651/Project-3/blob/master/Models/Classification.ipynb)
+Code can be found in the [Models/Classification.ipynb](https://github.com/ekuo651/Project-3/blob/master/Models/Classification.ipynb) notebook.
 
 
 ## **Conclusions**
