@@ -40,7 +40,7 @@ The URL to access the historical starting lineups is consistent for every team, 
 
 <br/>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/Presentation/Images/starting_lineup_web.png" width="600" height="400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <img src="Presentation/Images/starting_lineup_df.png" width="500" height="200">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/Presentation/Images/starting_web.png" width="600" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <img src="Presentation/Images/starting_df.png" width="600" height="200">
 <br/>
 
 
