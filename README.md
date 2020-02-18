@@ -48,23 +48,22 @@ By defining the link format with these two variables and running a for loop thro
 <p align="center"> 
   ATL's starting line up in the 2012 season
 <p align="center">
-  <img src="/Presentation/Images/starting_web.png" width="600" height="200"><br/>
+  <img src="/Presentation/Images/starting_web.png" width="800" height="200"><br/>
 </p>
 <p align="center">
   The output into a `DataFrame`
 <p align="center">
-  <img src="Presentation/Images/starting_df.png" width="600" height="200"><br/>
+  <img src="Presentation/Images/starting_df.png" width="650" height="200"><br/>
 </p>
 <br/>
-Similar to the historical starting lineups, player advanced stats by season was extracted using `BeautifulSoup`. THe URL format to access every player advanced stats only changes by season year and therefore, the same approach was used to pull in the data. The Code can be found in `Data Extraction/adv_stats.ipynb`<br/>
-
+Similar to the historical starting lineups, player advanced stats by season was extracted using `BeautifulSoup`. THe URL format to access every player advanced stats only changes by season year and therefore, the same approach was used to pull in the data. The Code can be found in `Data Extraction/adv_stats.ipynb`
+<br/>
 <p align="center">
-  <img src="Presentation/Images/adv_stat_df.png" width="800" height="200"><br/>
+  <img src="Presentation/Images/adv_stat_df.png" width="700" height="200"><br/>
 </p>
 Historical game schedules were obtained using the `basketball-reference` client as well. Code can be found in the `Data Extraction/season_schedules.ipynb` notebook.
 
 A list of active players were also obtained using the `basketball-reference` client. Code can be found in `Data Extraction/active_players.ipynb`.
-
 
 **NBA Stats**
 
@@ -73,11 +72,13 @@ Usage statistics were scraped from the NBA stats page.
 `Data Extraction/get_stats_nba_id.ipynb`
 >## ***RAY, THIS IS ALL YOU***
 
-
-
 **ESPN Depth Charts**
 
->## ***JEN, THIS IS ALL YOU***
+ESPN Depth Charts webpage provides real-time starting lineups per team. Using `BeautifulSoup`, real-time data is obtained and stored in a `DataFrame` for on-demand predictions. 
+<p align="center">
+  <img src="Presentation/Images/depth_df.png" width="525" height="150"><br/>
+</p>
+
 ---
 ## **Data Transformation**
 
@@ -112,9 +113,23 @@ After cleaning advanced stats data set, we used a left join to attach a `slug` t
 ---
 
 ## **Data on the Cloud**
-As part of a way to use use our models for day to day predictions, we hosted our datasets on the cloud. 
->## ***JEN, THIS IS ALL YOU***
+To use our models for day to day predictions, we hosted our dataset on the cloud using Amazon Relational Database Service (AWS RDS) and established a connection through Python. 
 
+<p align="center">
+  <img src="Presentation/Images/amazon_RDS.png" width="800" height="150"><br/>
+</p>
+
+**Three tables were created: Advanced Stats by Player, Usage Stats, and Box Scores**
+<br/>
+<p align="left">
+  <img src="Presentation/Images/create_table.png" width="700" height="225"><br/>
+</p>
+
+**The data was uploaded using .csv files created during the data extraction process** 
+<br/>
+<p align="left">
+  <img src="Presentation/Images/load_table.png" width="500" height="150"><br/>
+</p>
 
 ## **Machine Learning Models**
 
