@@ -122,9 +122,9 @@ Basketball Reference uses an unique identifier for players, the `slug`. It is an
 
 After cleaning advanced stats data set, we used a left join to attach a `slug` to each line of player data. However, since there are players who have the exact same name, we needed to ensure that there were no duplicates. To find the duplicates among almost 8,000 lines of data, we first defined a column pre-join to be populated with a unique integer. Post-join, we used `.value_counts()` on that individual series to identify the duplicates. Each set was manually inspected and the wrongly joined line was dropped. 
 
-
-
 **Head to Head Stats by Starting Lineup**
+
+Head to head box scores were calculated by first identifying the home and away players of each game. Then each set of lineup_name's were converted to sets of slugs. Afterwards, the sets of slugs were passed into a function to identify the sets of common games between a home team starter and the opposing starting lineup. Finally, a equally weighted set of stats were calculated among the common games for the last 2 years. Code can be found in the scripts and notebooks below. It should be noted that due to key errors in the lineup_name to slug, we had to truncate our dataset to 2328 games instead of 6,000 games. 
 
 `schedule_lineup.py`\
 `game_match.py`\
@@ -147,7 +147,16 @@ To use our models for day to day predictions, we hosted our dataset on the cloud
 
 ## **Machine Learning Models**
 
-<Neural Net
+### **Neural Nets**
+
+Initially, we ran a 1 layer neural net on the entire dataset with 2328 entries and 57 features across 5 starters, using a 30% validation split. The results were not promising. The accuracy of both the training and validation sets were fluctuating and did not seem to converge or even reliably trend in any given direction. 
+
+Therefore, we decided to revisit the dataset to see if we could reduce the 'noise'. The calculated box scores, which includes 15 features, did not show many highly correlated features. However, the heatmap produced by looking at the correlation of the entire 57 feature dataset uncovered various highly correlated features.
+
+Looking at the dataset, we could not visually identify which features were the culprits, therefore we wrote a function to detect the features that were highly correlated with at least 3 other features and removed those from the dataset. 
+
+Running the same net after removing the confounding features yielded more intelligible results. The training accuracy and the validation accuracy are trending together, relatively closely. The highest validation accuracy score we were able to achieve was 62%. 
+
 
 ### **Classification** 
 
@@ -166,7 +175,12 @@ Code can be found in the [Models/Classification.ipynb](https://github.com/ekuo65
 
 
 ## **Conclusions**
->#NEED CONCLUSION 
+
+We have seen that there is predictive power in using statistics to analyze matchup results. More can, and will, be done to further develop this model. One area that can be improved on is the method of calculating matchup box scores. 
+
+The current method equally weights all games that a player has in common with all the starters of the opposing team, without taking into account the fact that some games have more of the same players in common than others. Additionally, we would like to explore using an exponentially weighted average when calculating to take into account the recentness of the games. 
+
+For this dataset, we only included the home team starters' usage and advanced stats and that team member's matchup scores, which places heavier emphasis on the home team. For future datasets, we would like to explore a more balanced approach in curating the dataset.
 
 ## **Future Improvements**
 Some future improvements we would like to see for this product is for other users to have a front end environment to use the algortithm to predict future games. We explored using [Anvil](www.anvil.works) a python UI client to start expeirmenting with possibilities along with possible betting odds on the current market for games. 
