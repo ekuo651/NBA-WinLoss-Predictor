@@ -44,7 +44,7 @@ The URL to access the historical starting lineups is consistent for every team, 
             url = 'https://www.basketball-reference.com/teams/{}/{}_start.html'.format(i, j)
 ```
 
-By defining the link format with these two variables and running a for loop through every team and season year using `BeautifulSoup` functions, all of the data for each team and season was extracted to one `DataFrame`. This took approximately two minutes to run. The Code can found in the `Data Extraction/ReferenceLinup.ipynb`. <br/>
+By defining the link format with these two variables and running a for loop through every team and season year using `BeautifulSoup` functions, all of the data for each team and season was extracted to one `DataFrame`. This took approximately two minutes to run. The Code can found in the [Data Extraction/ReferenceLinup.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/ReferenceLineup.ipynb) notebook. <br/>
 <p align="center"> 
   ATL's starting lineup in the 2013 season
 <p align="center">
@@ -57,25 +57,25 @@ By defining the link format with these two variables and running a for loop thro
   <img src="Presentation/Images/starting_df.png" width="650" height="200"><br/>
 </p>
 <br/>
-Similar to the historical starting lineups, players' advanced stats were extracted using `BeautifulSoup`. The URL format to access every the advanced stats only changes by season year, therefore, the same approach in Python was used to pull in the data. The Code can be found in `Data Extraction/adv_stats.ipynb`<br/>
+Similar to the historical starting lineups, players' advanced stats were extracted using `BeautifulSoup`. The URL format to access every the advanced stats only changes by season year, therefore, the same approach in Python was used to pull in the data. Code can be found in the [Data Extraction/adv_stats.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/adv_stats.ipynb) notebook.<br/>
 
 <p align="center">
   <img src="Presentation/Images/adv_stat_df.png" width="700" height="200"><br/>
 </p>
-Historical game schedules were obtained using the `basketball-reference` client as well. Code can be found in the `Data Extraction/season_schedules.ipynb` notebook.
+Historical game schedules were obtained using the `basketball-reference` client as well. Code can be found in the [Data Extraction/season_schedules.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/season_schedules.ipynb) notebook.
 
-A list of active players were also obtained using the `basketball-reference` client. Code can be found in `Data Extraction/active_players.ipynb`.
+A list of active players were also obtained using the `basketball-reference` client. Code can be found in the [Data Extraction/active_players.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/active_players.ipynb) notebook.
 
 **NBA Stats**
 
 Usage statistics were scraped from the NBA stats page. 
 
-`Data Extraction/get_stats_nba_id.ipynb`
+[Data Extraction/get_stats_nba_id.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/get_stats_nba_id.ipynb)
 >## ***RAY, THIS IS ALL YOU***
 
 **ESPN Depth Charts**
 
-ESPN Depth Charts webpage provides real-time starting lineups per team. Using `BeautifulSoup`, real-time data is obtained and stored in a `DataFrame` for on-demand predictions. 
+ESPN Depth Charts webpage provides real-time starting lineups per team. Using `BeautifulSoup`, real-time data is obtained and stored in a `DataFrame` for on-demand predictions. Code can be found in the [Data Extraction/starting_lineup](https://github.com/ekuo651/Project-3/blob/master/Data%20Extraction/starting_lineup.ipynb)
 <p align="center">
   <img src="Presentation/Images/depth_df.png" width="525" height="150"><br/>
 </p>
@@ -92,7 +92,7 @@ Since we needed to calculate box scores of head to head matchup between starters
 
 Since we needed to calculate box scores based on games in common between players, we encoded the `game_id` onto the box scores dataset using a combination of `date`, `team` and `Location`. Due to the fact that games are often started at night one day and stretch into the next day, the dates across the schedule dataset and box score dataset were not consistent. 
 
-To perform a match, we had to define a second date 1 day after the game start date and perform 2 joins of the data. We also split the box score data into 2 data sets to by `HOME` or `AWAY` games. Then we performed two joins on each subset, and used the both teams to filter out the nulls and get the resulting correct `game_id` for each set of box scores. Afterwards, the 2 subsets were reconcatenated. Code can be found in `Data Transformation/encode_box_scores.ipynb`.
+To perform a match, we had to define a second date 1 day after the game start date and perform 2 joins of the data. We also split the box score data into 2 data sets to by `HOME` or `AWAY` games. Then we performed two joins on each subset, and used the both teams to filter out the nulls and get the resulting correct `game_id` for each set of box scores. Afterwards, the 2 subsets were reconcatenated. Code can be found in [Data Transformation/encode_box_scores.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Transformation/encode_box_scores.ipynb) notebook.
 
 **Identifying Players by Slugs**
 
@@ -101,7 +101,6 @@ Since our player centric approach relies on having starter data per game, the hi
 Basketball Reference uses an unique identifier for players, the `slug`. It is an alphanumeric string using the first 5 letters of a player's last name, first 2 letters of first name and a number, i.e. `duranke01`. We used the active players dataset, which contained the `slug`, `name` and `year` of a player to form the basis of the `names_all_formats` dataframe. From `name`, we defined the `lineup_name` of each player. However, we also needed to use `year` to match a player. 
 
 After cleaning advanced stats data set, we used a left join to attach a `slug` to each line of player data. However, since there are players who have the exact same name, we needed to ensure that there were no duplicates. To find the duplicates among almost 8,000 lines of data, we first defined a column pre-join to be populated with a unique integer. Post-join, we used `.value_counts()` on that individual series to identify the duplicates. Each set was manually inspected and the wrongly joined line was dropped. 
-
 
 
 
@@ -114,7 +113,7 @@ After cleaning advanced stats data set, we used a left join to attach a `slug` t
 ---
 
 ## **Data on the Cloud**
-To use our models for day to day predictions, we hosted our dataset on the cloud using Amazon Relational Database Service (AWS RDS) and established a connection through Python. 
+To use our models for day to day predictions, we hosted our dataset on the cloud using Amazon Relational Database Service (AWS RDS) and established a connection through Python. Code can be found in the [Data Transformation/tableSQL.ipynb](https://github.com/ekuo651/Project-3/blob/master/Data%20Transformation/tableSQL.ipynb)
 
 <p align="center">
   <img src="Presentation/Images/amazon_RDS.png" width="800" height="150"><br/>
@@ -150,7 +149,7 @@ The SVC model produced an accuracy Score of 62.0%, a true positive rate of 58%, 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Presentation/Images/classification_report.png" width="300" height="175">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    <img src="Presentation/Images/confusion.png" width="225" height="150">
 
-
+Code can be found in the [Models/Classification.ipynb](https://github.com/ekuo651/Project-3/blob/master/Models/Classification.ipynb)
 
 
 ## **Conclusions**
