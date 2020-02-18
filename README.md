@@ -67,11 +67,25 @@ Usage statistics were scraped from the NBA stats page.
 
 **A Unique Identifier**
 
-Since we needed to calculate box scores of head to head matchup between starters on the two teams, we needed a way to uniquely identify each game. After scraping the NBA schedule, we cleaned the data and assigned each game a unique ```game_id```.
+Since we needed to calculate box scores of head to head matchup between starters on the two teams, we needed a way to uniquely identify each game. After scraping the NBA schedule, we cleaned the data and assigned each game a unique `game_id`.
 
-**Connecting the Data Sets**
+**Encoding Player Box Scores**
 
-Since the box score data, usage data, historical starting lineup and current starting lineup data were from 3 different sources, we had to find a way to link them all together. 
+
+Since we needed to calculate box scores based on games in common between players, we encoded the `game_id` onto the box scores dataset using a combination of `date`, `team` and `Location`. Due to the fact that games are often started at night one day and stretch into the next day, the dates across the schedule dataset and box score dataset were not consistent. 
+
+To perform a match, we had to define a second date 1 day after the game start date and perform 2 joins of the data. We also split the box score data into 2 data sets to by `HOME` or `AWAY` games. Then we performed two joins on each subset, and used the both teams to filter out the nulls and get the resulting correct `game_id` for each set of box scores. Afterwards, the 2 subsets were reconcatenated. Code can be found in `Data Transformation/encode_box_scores.ipynb`.
+
+**Identifying Players by Slugs**
+
+Since our player centric approach relies on having starter data per game, the historical starting lineup dataset formed the backbone of our dataset. From that we were able to extract the `lineup_name` which is in the the following format: `K. Durant`. This was a challenge since it is not a unique identifier for the players, as `D. Wade` could refer to both well-known MVP Dwyane Wade as well as starting rookie Dean Wade. Therefore, we had to explore other options.
+
+Basketball Reference uses an unique identifier for players, the `slug`. It is an alphanumeric string using the first 5 letters of a player's last name, first 2 letters of first name and a number, i.e. `duranke01`. We used the active players dataset, which contained the `slug`, `name` and `year` of a player to form the basis of the `names_all_formats` dataframe. From `name`, we defined the `lineup_name` of each player. However, we also needed to use `year` to match a player. 
+
+After cleaning advanced stats data set, we used a left join to attach a `slug` to each line of player data. However, since there are players who have the exact same name, we needed to ensure that there were no duplicates. To find the duplicates among almost 8,000 lines of data, we first defined a column pre-join to be populated with a unique integer. Post-join, we used `.value_counts()` on that individual series to identify the duplicates. Each set was manually inspected and the wrongly joined line was dropped. 
+
+
+
 
 **Head to Head Stats by Starting Lineup**
 
@@ -105,4 +119,3 @@ As part of a way to use use our models for day to day predictions, we hosted our
 - `Basketball Reference Web Scraper`
 
 
-213D09D33BFB50023A778BB827749905D326C5E14BB51ACCBE8FA4DDC45660
